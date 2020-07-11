@@ -10,6 +10,10 @@ final kLabelStyle = TextStyle(
   fontWeight: FontWeight.bold,
   fontFamily: 'OpenSans',
 );
+const kTextColor = Color(0xFF535353);
+const kTextLightColor = Color(0xFFACACAC);
+
+const kDefaultPaddin = 20.0;
 
 final kBoxDecorationStyle = BoxDecoration(
   color: Color(0xFF6CA8F1),
