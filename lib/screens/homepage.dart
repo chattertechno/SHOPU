@@ -1,4 +1,5 @@
 import 'package:backg/screens/constant.dart';
+import 'package:backg/screens/home/shop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -145,7 +146,9 @@ class _HomePageState extends State<HomePage> {
                                   width: double.infinity,
                                   child: RaisedButton(
                                     elevation: 5.0,
-                                    onPressed: () => print("logged in"),
+                                    onPressed: () => Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) => HomeScreen()
+                                    )),
                                     padding: EdgeInsets.all(15.0),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(30.0),
