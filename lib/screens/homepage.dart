@@ -123,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                                   child: Row(
                                     children: <Widget>[
                                       FlatButton(
-                                        onPressed: () => print('Search'),
+                                        onPressed: () => Navigator.pushReplacementNamed(context, '/signup'),
                                         padding: EdgeInsets.only(right: 0.0),
                                         child: Text(
                                           'New? Register',
