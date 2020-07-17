@@ -1,4 +1,5 @@
 import 'package:backg/screens/constant.dart';
+import 'package:backg/screens/home/shop.dart';
 import 'package:backg/screens/homepage.dart';
 import 'package:backg/screens/products/products.dart';
 import 'package:backg/screens/signup_page.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/signup': (BuildContext context) => SignUpPage(),
         '/login': (BuildContext context) => HomePage(),
-        '/products': (BuildContext context) => ProductsPage()
+        '/products': (BuildContext context) => HomeScreen()
       },
       theme: ThemeData(
           textTheme: Theme.of(context).textTheme.apply(bodyColor: kTextColor),

@@ -1,5 +1,6 @@
 import 'package:backg/screens/constant.dart';
 import 'package:backg/screens/home/shop.dart';
+import 'package:backg/screens/products/products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -12,9 +13,10 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final _formkey = GlobalKey<FormState>();
+  final _scaffoldkey = GlobalKey<ScaffoldState>();
 
   String _username, _email, _password;
-  bool _obscureText = true;
+  bool _isSubmitting, _obscureText = true;
 
   void _submit() {
     final form = _formkey.currentState;
@@ -25,18 +27,38 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   void _registerUser() async {
-    http.Response response = await http.post('http://192.168.43.155:1337/auth/local/register', body: {
-      "username": _username,
-      "email": _email,
-      "password": _password
-    });
+    setState(() => _isSubmitting = true);
+    http.Response response = await http.post(
+        'http://192.168.43.155:1337/auth/local/register',
+        body: {"username": _username, "email": _email, "password": _password});
     final responseData = json.decode(response.body);
+    setState(() => _isSubmitting = false);
+    _showSuccessSnack();
+    _redirectUser();
     print(responseData);
+  }
+
+  void _showSuccessSnack() {
+    final snackbar = SnackBar(
+      content: Text(
+        'User $_username successfully created',
+        style: TextStyle(color: Colors.green),
+      ),
+    );
+    _scaffoldkey.currentState.showSnackBar(snackbar);
+    _formkey.currentState.reset();
+  }
+
+  void _redirectUser() {
+    Future.delayed(Duration(seconds: 2), () {
+      Navigator.pushReplacementNamed(context, '/products');
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldkey,
       body: Stack(
         children: <Widget>[
           AnnotatedRegion<SystemUiOverlayStyle>(
@@ -175,18 +197,24 @@ class _SignUpPageState extends State<SignUpPage> {
                                           color: Colors.white,
                                           fontFamily: 'OpenSans'),
                                       decoration: InputDecoration(
-                                        suffixIcon: GestureDetector(
-                                          onTap: () {
-                                            setState(() => _obscureText = !_obscureText);
-                                          },
-                                          child: Icon(_obscureText ? Icons.visibility : Icons.visibility_off, color: Colors.white,),
-                                        ),
+                                          suffixIcon: GestureDetector(
+                                            onTap: () {
+                                              setState(() =>
+                                                  _obscureText = !_obscureText);
+                                            },
+                                            child: Icon(
+                                              _obscureText
+                                                  ? Icons.visibility
+                                                  : Icons.visibility_off,
+                                              color: Colors.white,
+                                            ),
+                                          ),
                                           border: InputBorder.none,
                                           contentPadding:
                                               EdgeInsets.only(top: 14.0),
                                           prefixIcon: Icon(
                                             Icons.lock,
-                                            color: Colors.white, 
+                                            color: Colors.white,
                                           ),
                                           hintText: 'Enter your Password',
                                           hintStyle: kHintTextStyle),
@@ -221,24 +249,37 @@ class _SignUpPageState extends State<SignUpPage> {
                                     padding:
                                         EdgeInsets.symmetric(vertical: 15.0),
                                     width: double.infinity,
-                                    child: RaisedButton(
-                                      elevation: 5.0,
-                                      onPressed: _submit,
-                                      padding: EdgeInsets.all(15.0),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30.0),
-                                      ),
-                                      color: Colors.white,
-                                      child: Text(
-                                        'SignUp',
-                                        style: TextStyle(
-                                            color: Color(0xFF527DAA),
-                                            letterSpacing: 1.5,
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'OpenSans'),
-                                      ),
+                                    child: Column(
+                                      children: [
+                                        _isSubmitting == true
+                                            ? CircularProgressIndicator(
+                                                valueColor:
+                                                    AlwaysStoppedAnimation(
+                                                        Theme.of(context)
+                                                            .primaryColor),
+                                              )
+                                            : RaisedButton(
+                                                elevation: 5.0,
+                                                onPressed: _submit,
+                                                padding: EdgeInsets.all(15.0),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                ),
+                                                color: Colors.white,
+                                                child: Text(
+                                                  'SignUp',
+                                                  style: TextStyle(
+                                                      color: Color(0xFF527DAA),
+                                                      letterSpacing: 1.5,
+                                                      fontSize: 18.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontFamily: 'OpenSans'),
+                                                ),
+                                              ),
+                                      ],
                                     ),
                                   ),
                                   Column(

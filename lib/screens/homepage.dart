@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
                                   alignment: Alignment.centerLeft,
                                   decoration: kBoxDecorationStyle,
                                   height: 60.0,
-                                  child: TextField(
+                                  child: TextFormField(
                                     keyboardType: TextInputType.emailAddress,
                                     style: TextStyle(
                                         color: Colors.white,
@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                                   alignment: Alignment.centerLeft,
                                   decoration: kBoxDecorationStyle,
                                   height: 60.0,
-                                  child: TextField(
+                                  child: TextFormField(
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontFamily: 'OpenSans'),
