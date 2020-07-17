@@ -1,5 +1,6 @@
 import 'package:backg/screens/constant.dart';
 import 'package:backg/screens/homepage.dart';
+import 'package:backg/screens/products/products.dart';
 import 'package:backg/screens/signup_page.dart';
 import 'package:flutter/material.dart';
 
@@ -15,12 +16,12 @@ class MyApp extends StatelessWidget {
       title: 'Jeph Cakes',
       routes: {
         '/signup': (BuildContext context) => SignUpPage(),
-        '/login': (BuildContext context) => HomePage()
+        '/login': (BuildContext context) => HomePage(),
+        '/products': (BuildContext context) => ProductsPage()
       },
       theme: ThemeData(
-        textTheme: Theme.of(context).textTheme.apply(bodyColor: kTextColor),
-        visualDensity: VisualDensity.adaptivePlatformDensity
-      ),
+          textTheme: Theme.of(context).textTheme.apply(bodyColor: kTextColor),
+          visualDensity: VisualDensity.adaptivePlatformDensity),
       home: HomePage(),
     );
   }
