@@ -29,14 +29,29 @@ class _SignUpPageState extends State<SignUpPage> {
   void _registerUser() async {
     setState(() => _isSubmitting = true);
     http.Response response = await http.post(
-        'http://192.168.43.155:1337/auth/local/register',
+        'http://serviceslikeme.herokuapp.com/auth/local/register',
         body: {"username": _username, "email": _email, "password": _password});
     final responseData = json.decode(response.body);
+    if (response.statusCode == 200) {
     setState(() => _isSubmitting = false);
     _showSuccessSnack();
     _redirectUser();
     print(responseData);
+    } else {
+     setState(() => _isSubmitting = false);
+     final List<dynamic> errorMsg = responseData['message'];
+     final String cool = (errorMsg[0]["messages"][0]["message"]);
+     _showErrorSnack(cool);
+
   }
+  }
+ void _showErrorSnack(String cool) {
+   final snackbar = SnackBar(
+     content: Text('$cool', style: kLabelStyle ,),
+   );
+   _scaffoldkey.currentState.showSnackBar(snackbar);
+ }
+
 
   void _showSuccessSnack() {
     final snackbar = SnackBar(
@@ -48,6 +63,8 @@ class _SignUpPageState extends State<SignUpPage> {
     _scaffoldkey.currentState.showSnackBar(snackbar);
     _formkey.currentState.reset();
   }
+
+
 
   void _redirectUser() {
     Future.delayed(Duration(seconds: 2), () {

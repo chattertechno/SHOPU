@@ -1,7 +1,6 @@
 import 'package:backg/screens/constant.dart';
 import 'package:backg/screens/home/shop.dart';
 import 'package:backg/screens/homepage.dart';
-import 'package:backg/screens/products/products.dart';
 import 'package:backg/screens/signup_page.dart';
 import 'package:flutter/material.dart';
 
@@ -27,3 +26,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+ 
