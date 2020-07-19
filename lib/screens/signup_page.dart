@@ -1,10 +1,9 @@
 import 'package:backg/screens/constant.dart';
-import 'package:backg/screens/home/shop.dart';
-import 'package:backg/screens/products/products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -32,8 +31,9 @@ class _SignUpPageState extends State<SignUpPage> {
         'http://serviceslikeme.herokuapp.com/auth/local/register',
         body: {"username": _username, "email": _email, "password": _password});
     final responseData = json.decode(response.body);
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200) { 
     setState(() => _isSubmitting = false);
+    _storeUserData(responseData);
     _showSuccessSnack();
     _redirectUser();
     print(responseData);
@@ -44,6 +44,13 @@ class _SignUpPageState extends State<SignUpPage> {
      _showErrorSnack(cool);
 
   }
+  }
+  void _storeUserData(responseData) async{
+    final prefs = await SharedPreferences.getInstance();
+    Map<String, dynamic> user = responseData['user'];
+    user.putIfAbsent('Jwt', () => responseData['jwt']);
+    json.encode(user);
+    prefs.setString('user', json.encode(user));
   }
  void _showErrorSnack(String cool) {
    final snackbar = SnackBar(

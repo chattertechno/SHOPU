@@ -16,13 +16,13 @@ class MyApp extends StatelessWidget {
       title: 'Jeph Cakes',
       routes: {
         '/signup': (BuildContext context) => SignUpPage(),
-        '/login': (BuildContext context) => HomePage(),
+        '/login': (BuildContext context) => Homepage(),
         '/products': (BuildContext context) => HomeScreen()
       },
       theme: ThemeData(
           textTheme: Theme.of(context).textTheme.apply(bodyColor: kTextColor),
           visualDensity: VisualDensity.adaptivePlatformDensity),
-      home: HomePage(),
+      home: Homepage(),
     );
   }
 }

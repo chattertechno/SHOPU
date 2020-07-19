@@ -1,51 +1,77 @@
-import 'dart:convert';
-
 import 'package:backg/screens/constant.dart';
-import 'package:backg/screens/home/shop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class HomePage extends StatefulWidget {
+class Homepage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomepageState createState() => _HomepageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomepageState extends State<Homepage> {
   final _formkey = GlobalKey<FormState>();
   final _scaffoldkey = GlobalKey<ScaffoldState>();
-  bool  _isSubmitting, _obscureText = true;
-  String  _email, _password;
+
+  String _username, _email, _password;
+  bool _isSubmitting, _obscureText = true;
 
   void _submit() {
     final form = _formkey.currentState;
     if (form.validate()) {
       form.save();
-      _loginUser();
+      _registerUser();
     }
   }
 
-  void _loginUser() async {
+  void _registerUser() async {
     setState(() => _isSubmitting = true);
-    http.Response response = await http.post('http://serviceslikeme.herokuapp.com/auth/local', 
-  body: {
-    "identifier": _email,
-    "password": _password,
-
-  });
-  final responseData = json.decode(response.body);
-  if (response.statusCode == 200) {
-  setState(() => _isSubmitting = false);
-  _showSuccessSnack();
-  _redirectUser();
-  print(responseData);
-  } else {
+    http.Response response = await http.post(
+        'http://serviceslikeme.herokuapp.com/auth/local',
+        body: { "identifier": _email, "password": _password});
+    final responseData = json.decode(response.body);
+    if (response.statusCode == 200) { 
+    setState(() => _isSubmitting = false);
+    _storeUserData(responseData);
+    _showSuccessSnack();
+    _redirectUser();
+    print(responseData);
+    } else {
      setState(() => _isSubmitting = false);
      final List<dynamic> errorMsg = responseData['message'];
      final String cool = (errorMsg[0]["messages"][0]["message"]);
      _showErrorSnack(cool);
+
   }
   }
+  void _storeUserData(responseData) async{
+    final prefs = await SharedPreferences.getInstance();
+    Map<String, dynamic> user = responseData['user'];
+    user.putIfAbsent('Jwt', () => responseData['jwt']);
+    json.encode(user);
+    prefs.setString('user', json.encode(user));
+  }
+ void _showErrorSnack(String cool) {
+   final snackbar = SnackBar(
+     content: Text('$cool', style: kLabelStyle ,),
+   );
+   _scaffoldkey.currentState.showSnackBar(snackbar);
+ }
+
+
+  void _showSuccessSnack() {
+    final snackbar = SnackBar(
+      content: Text(
+        'User  successfully Logged In',
+        style: TextStyle(color: Colors.green),
+      ),
+    );
+    _scaffoldkey.currentState.showSnackBar(snackbar);
+    _formkey.currentState.reset();
+  }
+
+
 
   void _redirectUser() {
     Future.delayed(Duration(seconds: 2), () {
@@ -53,21 +79,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _showSuccessSnack() {
-  final snackbar = SnackBar(
-    content: Text('User  successfull logged in', style: TextStyle(color: Colors.green),),
-  );
-  _scaffoldkey.currentState.showSnackBar(snackbar);
-  _formkey.currentState.reset();
-}
-
- void _showErrorSnack(String cool) {
-   final snackbar = SnackBar(
-     content: Text('$cool', style: kLabelStyle ,),
-   );
-   _scaffoldkey.currentState.showSnackBar(snackbar);
-   _formkey.currentState.reset();
- }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,198 +113,206 @@ class _HomePageState extends State<HomePage> {
                     child: SingleChildScrollView(
                       physics: AlwaysScrollableScrollPhysics(),
                       padding: EdgeInsets.symmetric(
-                          horizontal: 40.0, vertical: 120.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            'Sign In',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 30.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 30.0,
-                          ),
-                          Center(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Form(
-                                  key: _formkey,
-                                  child: Text(
+                          horizontal: 40.0, vertical: 80.0),
+                      child: Form(
+                        key: _formkey,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              'Sign Up',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              height: 30.0,
+                            ),
+                            Center(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
                                     'Email address',
                                     style: kLabelStyle,
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  decoration: kBoxDecorationStyle,
-                                  height: 60.0,
-                                  child: TextFormField(
-                                    onSaved: (val) => _email = val,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'OpenSans'),
-                                    decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        contentPadding:
-                                            EdgeInsets.only(top: 14.0),
-                                        prefixIcon: Icon(
-                                          Icons.email,
-                                          color: Colors.white,
-                                        ),
-                                        hintText: 'Enter Email address',
-                                        hintStyle: kHintTextStyle),
+                                  SizedBox(
+                                    height: 10.0,
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  'Enter Your Password',
-                                  style: kLabelStyle,
-                                ),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  decoration: kBoxDecorationStyle,
-                                  height: 60.0,
-                                  child: TextFormField(
-                                    onSaved: (val) => _password = val,
-                                    obscureText: _obscureText,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'OpenSans'),
-                                    decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        contentPadding:
-                                            EdgeInsets.only(top: 14.0),
-                                        prefixIcon: Icon(
-                                          Icons.lock,
+                                  Container(
+                                    alignment: Alignment.centerLeft,
+                                    decoration: kBoxDecorationStyle,
+                                    height: 60.0,
+                                    child: TextFormField(
+                                      onSaved: (val) => _email = val,
+                                      autofocus: true,
+                                      validator: (val) => !val.contains('@')
+                                          ? 'Invalid email'
+                                          : null,
+                                      style: TextStyle(
                                           color: Colors.white,
-                                        ),
-                                        suffixIcon: GestureDetector(
-                                          onTap: () {
-                                            setState(() =>
-                                                _obscureText = !_obscureText);
-                                          },
-                                          child: Icon(
-                                            _obscureText
-                                                ? Icons.visibility
-                                                : Icons.visibility_off,
+                                          fontFamily: 'OpenSans'),
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          contentPadding:
+                                              EdgeInsets.only(top: 14.0),
+                                          prefixIcon: Icon(
+                                            Icons.email,
                                             color: Colors.white,
                                           ),
-                                        ),
-                                        hintText: 'Enter your Password',
-                                        hintStyle: kHintTextStyle),
+                                          hintText: 'Enter Email address',
+                                          hintStyle: kHintTextStyle),
+                                    ),
                                   ),
-                                ),
-                                Container(
-                                  alignment: Alignment.centerRight,
-                                  child: Row(
-                                    children: <Widget>[
-                                      FlatButton(
-                                        onPressed: () =>
-                                            Navigator.pushReplacementNamed(
-                                                context, '/signup'),
-                                        padding: EdgeInsets.only(right: 0.0),
-                                        child: Text(
-                                          'New? Register',
-                                          style: kLabelStyle,
-                                        ),
-                                      ),
-                                      FlatButton(
-                                        onPressed: () => Navigator.push(context, MaterialPageRoute(
-                                          builder: (context) => HomeScreen(),
-                                        )),
-                                        padding: EdgeInsets.only(left: 120.0),
-                                        child: Text(
-                                          'Forgot Password',
-                                          style: kLabelStyle,
-                                        ),
-                                      )
-                                    ],
+                                  SizedBox(
+                                    height: 10.0,
                                   ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.symmetric(vertical: 15.0),
-                                  width: double.infinity,
-                                  child: Column(
-                                    children: <Widget>[
-                                      _isSubmitting == true ? CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Theme.of(context).primaryColor),) :
-                                      RaisedButton(
-                                        elevation: 5.0,
-                                        onPressed: _submit,
-                                        // onPressed: () => Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //         builder: (context) =>
-                                        //             HomeScreen())),
-                                        padding: EdgeInsets.all(15.0),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(30.0),
-                                        ),
-                                        color: Colors.white,
-                                        child: Text(
-                                          'Sign IN',
-                                          style: TextStyle(
-                                              color: Color(0xFF527DAA),
-                                              letterSpacing: 1.5,
-                                              fontSize: 18.0,
-                                              fontWeight: FontWeight.bold,
-                                              fontFamily: 'OpenSans'),
-                                        ),
-                                      ),
-                                    ],
+                                  Text(
+                                    'Enter Your Password',
+                                    style: kLabelStyle,
                                   ),
-                                ),
-                                Column(
-                                  children: <Widget>[
-                                    Center(
-                                      child: Text(
-                                        '- OR - ',
-                                        style: TextStyle(
+                                  SizedBox(
+                                    height: 10.0,
+                                  ),
+                                  Container(
+                                    alignment: Alignment.centerLeft,
+                                    decoration: kBoxDecorationStyle,
+                                    height: 60.0,
+                                    child: TextFormField(
+                                      obscureText: _obscureText,
+                                      onSaved: (val) => _password = val,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: 'OpenSans'),
+                                      decoration: InputDecoration(
+                                          suffixIcon: GestureDetector(
+                                            onTap: () {
+                                              setState(() =>
+                                                  _obscureText = !_obscureText);
+                                            },
+                                            child: Icon(
+                                              _obscureText
+                                                  ? Icons.visibility
+                                                  : Icons.visibility_off,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          border: InputBorder.none,
+                                          contentPadding:
+                                              EdgeInsets.only(top: 14.0),
+                                          prefixIcon: Icon(
+                                            Icons.lock,
                                             color: Colors.white,
-                                            fontWeight: FontWeight.w400),
-                                      ),
+                                          ),
+                                          hintText: 'Enter your Password',
+                                          hintStyle: kHintTextStyle),
                                     ),
-                                    SizedBox(
-                                      height: 10.0,
+                                  ),
+                                  Container(
+                                    alignment: Alignment.centerRight,
+                                    child: Row(
+                                      children: <Widget>[
+                                        FlatButton(
+                                          onPressed: () =>
+                                              Navigator.pushReplacementNamed(
+                                                  context, '/signup'),
+                                          padding: EdgeInsets.only(right: 0.0),
+                                          child: Text(
+                                            'Sign Up',
+                                            style: kLabelStyle,
+                                          ),
+                                        ),
+                                        FlatButton(
+                                          onPressed: () => print('fuckoff'),
+                                          padding: EdgeInsets.only(left: 120.0),
+                                          child: Text(
+                                            'Forgot Password',
+                                            style: kLabelStyle,
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                    Text(
-                                      'Sign In With',
-                                      style: kLabelStyle,
+                                  ),
+                                  Container(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 15.0),
+                                    width: double.infinity,
+                                    child: Column(
+                                      children: [
+                                        _isSubmitting == true
+                                            ? CircularProgressIndicator(
+                                                valueColor:
+                                                    AlwaysStoppedAnimation(
+                                                        Theme.of(context)
+                                                            .primaryColor),
+                                              )
+                                            : RaisedButton(
+                                                elevation: 5.0,
+                                                onPressed: _submit,
+                                                padding: EdgeInsets.all(15.0),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                ),
+                                                color: Colors.white,
+                                                child: Text(
+                                                  'SignUp',
+                                                  style: TextStyle(
+                                                      color: Color(0xFF527DAA),
+                                                      letterSpacing: 1.5,
+                                                      fontSize: 18.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontFamily: 'OpenSans'),
+                                                ),
+                                              ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 30.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                  ),
+                                  Column(
                                     children: <Widget>[
-                                      _buildsocialbtn(
-                                          () => print("hello dude00"),
-                                          AssetImage(
-                                              'assets/images/facebook.jpg')),
-                                      _buildsocialbtn(
-                                          () => print("fuckoff"),
-                                          AssetImage(
-                                              'assets/images/google.jpg'))
+                                      Center(
+                                        child: Text(
+                                          '- OR - ',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Text(
+                                        'Sign Up With',
+                                        style: kLabelStyle,
+                                      ),
                                     ],
                                   ),
-                                )
-                              ],
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 30.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: <Widget>[
+                                        _buildsocialbtn(
+                                            () => print("hello dude00"),
+                                            AssetImage(
+                                                'assets/images/facebook.jpg')),
+                                        _buildsocialbtn(
+                                            () => print("fuckoff"),
+                                            AssetImage(
+                                                'assets/images/google.jpg'))
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   )
