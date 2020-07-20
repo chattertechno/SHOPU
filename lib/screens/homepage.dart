@@ -120,7 +120,7 @@ class _HomepageState extends State<Homepage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              'Sign Up',
+                              'Sign In',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 30.0,
@@ -258,7 +258,7 @@ class _HomepageState extends State<Homepage> {
                                                 ),
                                                 color: Colors.white,
                                                 child: Text(
-                                                  'SignUp',
+                                                  'Login',
                                                   style: TextStyle(
                                                       color: Color(0xFF527DAA),
                                                       letterSpacing: 1.5,
