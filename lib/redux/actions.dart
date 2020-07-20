@@ -2,10 +2,12 @@
 import 'dart:convert';
 
 import 'package:backg/models/app_state.dart';
+import 'package:backg/models/product.dart';
 import 'package:backg/models/user.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 ThunkAction<AppState> getUserAction = (Store<AppState> store) async {
   final prefs = await SharedPreferences.getInstance(); 
@@ -20,4 +22,24 @@ class GetUserAction {
   User get user => this._user;
 
   GetUserAction(this._user);
+}
+
+
+ThunkAction<AppState> getProductsAction = (Store<AppState> store) async {
+  http.Response response = await http.get('https://serviceslikeme.herokuapp.com/products');
+  final List<dynamic> responseData = json.decode(response.body);
+  List<Product> products = [];
+  responseData.forEach((productData) {
+    final Product product = Product.fromJson(productData);
+    products.add(product);
+   });
+  store.dispatch(GetProductsAction(products));
+};
+
+class GetProductsAction {
+  final List<Product> _products;
+
+  List<Product> get products => this._products; 
+
+  GetProductsAction(this._products);
 }

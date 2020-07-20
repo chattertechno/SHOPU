@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
           return AppBar(
             centerTitle: true,
             title: SizedBox(child: state.user != null ? Text(state.user.username) : Text(''),),
-            backgroundColor: Colors.yellow,
+            backgroundColor: Color(0xF7F4E7),
             elevation: 0,
             leading:  Padding(
               padding: const EdgeInsets.all(8.0),
