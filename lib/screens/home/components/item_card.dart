@@ -1,8 +1,10 @@
 import 'package:backg/models/product.dart';
+import 'package:backg/screens/home/detailshop.dart';
 import 'package:backg/screens/products/products.dart';
 import 'package:flutter/material.dart';
 import '../../constant.dart';
 import '../../../models/product.dart';
+import '../detailed_shop.dart';
 
 class ItemCard extends StatelessWidget {
   final Product product;
@@ -13,15 +15,16 @@ class ItemCard extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    final String pictureUrl =
+    final String pictureUrl = 
         'https://serviceslikeme.herokuapp.com${product.picture[0]['url']}';
     return InkWell(
       onTap: press, 
       child: GestureDetector(
-        onTap: () => Navigator.of(context).push(
+        onTap: () =>
+        Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) {
-            return ProductsPage(product: product);
+            return DetailShop(product: product);
           }
         )
       ),
@@ -33,7 +36,7 @@ class ItemCard extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(kDefaultPaddin),
                 decoration: BoxDecoration(
-                    color: Color(0XF3BBD9),
+                    color: product.color,
                     borderRadius: BorderRadius.circular(16)),
                 child: Hero(
                   tag: "${product.id}",

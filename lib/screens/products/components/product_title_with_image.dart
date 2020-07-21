@@ -6,7 +6,7 @@ import '../../constant.dart';
 class ProductTitleWithImage extends StatelessWidget {
   final Product item;
   ProductTitleWithImage({
-    @required this.item,
+    @required this.item, Product product,
   });
 
   

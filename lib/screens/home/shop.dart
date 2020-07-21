@@ -40,12 +40,12 @@ class _HomeScreenState extends State<HomeScreen> {
           return AppBar(
             centerTitle: true,
             title: SizedBox(child: state.user != null ? Text(state.user.username) : Text(''),),
-            backgroundColor: Color(0xF7F4E7),
+            backgroundColor: Colors.white,
             elevation: 0,
             leading:  Padding(
               padding: const EdgeInsets.all(8.0),
               child: state.user != null ? IconButton(
-                icon: Icon(Icons.exit_to_app, color: kTextColor,),
+                icon: Icon(Icons.exit_to_app, color: Colors.black,),
                 onPressed: () {},
               ) : Text(''),
             ),
