@@ -16,6 +16,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
+    final Orientation orientation = MediaQuery.of(context).orientation;
     return StoreConnector<AppState, AppState>(
         converter: (store) => store.state,
         builder: (_, state) {
@@ -25,7 +26,7 @@ class _BodyState extends State<Body> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
                 child: Text(
-                  "HandBags",
+                  "Cakes",
                   style: Theme.of(context)
                       .textTheme
                       .headline5
@@ -40,10 +41,10 @@ class _BodyState extends State<Body> {
                   child: GridView.builder(
                     itemCount: state.products.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
+                      crossAxisCount: orientation == Orientation.portrait ? 2 : 3,
                       mainAxisSpacing: kDefaultPaddin,
                       crossAxisSpacing: kDefaultPaddin,
-                      childAspectRatio: 0.75,
+                      childAspectRatio: orientation == Orientation.portrait ? 0.75 : 1.0,
                     ),
                     itemBuilder: (context, index) => 
                     ItemCard(

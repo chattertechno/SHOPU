@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
             leading:  Padding(
               padding: const EdgeInsets.all(8.0),
               child: state.user != null ? IconButton(
-                icon: Icon(Icons.exit_to_app),
+                icon: Icon(Icons.exit_to_app, color: kTextColor,),
                 onPressed: () {},
               ) : Text(''),
             ),
