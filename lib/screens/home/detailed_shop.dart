@@ -68,7 +68,7 @@ class Header extends StatelessWidget {
   Widget build(BuildContext context) {
     final Orientation orientation = MediaQuery.of(context).orientation;
     final String pictureUrl =
-        'https://serviceslikeme.herokuapp.com${product.picture[0]['url']}';
+        'https://api.jephcakes.com${product.picture[0]['url']}';
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: kDefaultPaddin),
       child: Column(

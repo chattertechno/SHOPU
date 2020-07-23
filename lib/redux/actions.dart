@@ -26,7 +26,7 @@ class GetUserAction {
 
 
 ThunkAction<AppState> getProductsAction = (Store<AppState> store) async {
-  http.Response response = await http.get('https://serviceslikeme.herokuapp.com/products');
+  http.Response response = await http.get('https://api.jephcakes.com/products');
   final List<dynamic> responseData = json.decode(response.body);
   List<Product> products = [];
   responseData.forEach((productData) {

@@ -28,7 +28,7 @@ class _SignUpPageState extends State<SignUpPage> {
   void _registerUser() async {
     setState(() => _isSubmitting = true);
     http.Response response = await http.post(
-        'http://serviceslikeme.herokuapp.com/auth/local/register',
+        'http://api,jephcakes.com/auth/local/register',
         body: {"username": _username, "email": _email, "password": _password});
     final responseData = json.decode(response.body);
     if (response.statusCode == 200) { 
