@@ -28,7 +28,7 @@ class _HomepageState extends State<Homepage> {
   void _registerUser() async {
     setState(() => _isSubmitting = true);
     http.Response response = await http.post(
-        'http://api.jephcakes.com/auth/local',
+        'https://api.jephcakes.com/auth/local',
         body: { "identifier": _email, "password": _password});
     final responseData = json.decode(response.body);
     if (response.statusCode == 200) { 
@@ -75,7 +75,7 @@ class _HomepageState extends State<Homepage> {
 
   void _redirectUser() {
     Future.delayed(Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, '/products');
+      Navigator.pushReplacementNamed(context, '/');
     });
   }
 
@@ -145,6 +145,7 @@ class _HomepageState extends State<Homepage> {
                                     decoration: kBoxDecorationStyle,
                                     height: 60.0,
                                     child: TextFormField(
+                                      keyboardType: TextInputType.emailAddress,
                                       onSaved: (val) => _email = val,
                                       autofocus: true,
                                       validator: (val) => !val.contains('@')

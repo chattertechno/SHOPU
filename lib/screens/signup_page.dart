@@ -25,10 +25,14 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   }
 
+  // void _facebbokUser() async {
+  //   setState(() => _isSubmitting = true);
+  //   http.Response response = await http.get('https://api.jephcakes.com/connect/facebook')
+  // }
   void _registerUser() async {
     setState(() => _isSubmitting = true);
     http.Response response = await http.post(
-        'http://api,jephcakes.com/auth/local/register',
+        'https://api.jephcakes.com/auth/local/register',
         body: {"username": _username, "email": _email, "password": _password});
     final responseData = json.decode(response.body);
     if (response.statusCode == 200) { 
@@ -75,7 +79,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   void _redirectUser() {
     Future.delayed(Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, '/products');
+      Navigator.pushReplacementNamed(context, '/');
     });
   }
 

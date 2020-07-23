@@ -18,52 +18,51 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     final Orientation orientation = MediaQuery.of(context).orientation;
     return StoreConnector<AppState, AppState>(
-        converter: (store) => store.state,
-        builder: (_, state) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
+      converter: (store) => store.state,
+      builder: (_, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
+              child: Text(
+                "Cakes",
+                style: Theme.of(context)
+                    .textTheme
+                    .headline5
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
+            ),
+            Categories(),
+            Expanded(
+              child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
-                child: Text(
-                  "Cakes",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline5
-                      .copyWith(fontWeight: FontWeight.bold),
-                ),
-              ),
-              Categories(),
-              Expanded(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
-                  child: GridView.builder(
-                    itemCount: state.products.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: orientation == Orientation.portrait ? 2 : 3,
-                      mainAxisSpacing: kDefaultPaddin,
-                      crossAxisSpacing: kDefaultPaddin,
-                      childAspectRatio: orientation == Orientation.portrait ? 0.75 : 1.0,
-                    ),
-                    itemBuilder: (context, index) => 
-                    ItemCard(
-                      product: state.products[index],
-                      press: () {}
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => ProductsPage(
-                      //       product: products[index],
-                      //     ),
-                      //   ),
-                      // ),
-                    ),
+                child: GridView.builder(
+                  itemCount: state.products.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: orientation == Orientation.portrait ? 2 : 3,
+                    mainAxisSpacing: kDefaultPaddin,
+                    crossAxisSpacing: kDefaultPaddin,
+                    childAspectRatio:
+                        orientation == Orientation.portrait ? 0.75 : 1.0,
                   ),
+                  itemBuilder: (context, index) =>
+                      ItemCard(product: state.products[index], press: () {}
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => ProductsPage(
+                          //       product: products[index],
+                          //     ),
+                          //   ),
+                          // ),
+                          ),
                 ),
               ),
-            ],
-          );
-        });
+            ),
+          ],
+        );
+      },
+    );
   }
 }

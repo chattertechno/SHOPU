@@ -16,7 +16,7 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String pictureUrl = 
-        'https://serviceslikeme.herokuapp.com${product.picture[0]['url']}';
+        'https://api.jephcakes.com${product.picture[0]['url']}';
     return InkWell(
       onTap: press, 
       child: GestureDetector(
@@ -50,7 +50,7 @@ class ItemCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: kDefaultPaddin / 4),
               child: Text(
-                product.name,
+                product.name.toUpperCase(),
                 style: TextStyle(color: kTextLightColor),
               ),
             ),

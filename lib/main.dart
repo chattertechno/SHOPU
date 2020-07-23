@@ -1,6 +1,7 @@
 import 'package:backg/models/app_state.dart';
 import 'package:backg/redux/actions.dart';
 import 'package:backg/redux/reducers.dart';
+import 'package:backg/screens/cart/cart_page.dart';
 import 'package:backg/screens/constant.dart';
 import 'package:backg/screens/home/shop.dart';
 import 'package:backg/screens/homepage.dart';
@@ -30,7 +31,8 @@ class MyApp extends StatelessWidget {
         routes: {
           '/signup': (BuildContext context) => SignUpPage(),
           '/login': (BuildContext context) => Homepage(),
-          '/products': (BuildContext context) => HomeScreen(
+          '/cart': (BuildContext contet) => CartPage(),
+          '/': (BuildContext context) => HomeScreen(
             onInit: () {
               // dispatch get useraction yo take user data
               StoreProvider.of<AppState>(context).dispatch(getUserAction);
@@ -42,7 +44,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             textTheme: Theme.of(context).textTheme.apply(bodyColor: kTextColor),
             visualDensity: VisualDensity.adaptivePlatformDensity),
-        home: Homepage(),
+      
       ),
     );
   }

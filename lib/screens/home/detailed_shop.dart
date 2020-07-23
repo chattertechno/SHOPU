@@ -1,7 +1,10 @@
+import 'package:backg/models/app_state.dart';
 import 'package:backg/models/product.dart';
+import 'package:backg/redux/actions.dart';
 import 'package:backg/screens/constant.dart';
 import 'package:backg/screens/products/components/description.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class DetailedShop extends StatelessWidget {
@@ -26,22 +29,19 @@ class DetailedShop extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(24),
-                          topRight: Radius.circular(24))),
+                          topLeft: Radius.circular(48),
+                          topRight: Radius.circular(48))),
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
-                        SizedBox(
-                          height: kDefaultPaddin / 2,
-                        ),
                         Description(
                           product: product,
                         ),
                         SizedBox(
-                          height: kDefaultPaddin / 2,
+                          height: 2,
                         ),
                         CounterFav(),
-                        SizedBox(height: kDefaultPaddin / 2),
+                        SizedBox(height: 0.1),
                         AddToCart(
                           product: product,
                         )
@@ -75,7 +75,7 @@ class Header extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            product.name,
+            product.name.toUpperCase(),
             style: Theme.of(context)
                 .textTheme
                 .headline4
@@ -90,10 +90,11 @@ class Header extends StatelessWidget {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                        text: "Price\n", style: TextStyle(color: Colors.black)),
+                        text: "Price\n",
+                        style: TextStyle(color: Colors.black, fontSize: 20)),
                     TextSpan(
-                      text: "\$${product.price}",
-                      style: Theme.of(context).textTheme.headline4.copyWith(
+                      text: "\ ${product.price} Sh",
+                      style: Theme.of(context).textTheme.headline5.copyWith(
                           color: Colors.black, fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -110,7 +111,7 @@ class Header extends StatelessWidget {
                     child: Image.network(pictureUrl,
                         width: orientation == Orientation.portrait ? 100 : 150,
                         height: orientation == Orientation.portrait ? 300 : 220,
-                        fit: BoxFit.cover),
+                        fit: BoxFit.contain),
                   ),
                 ),
               )
@@ -128,11 +129,10 @@ class Description extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: kDefaultPaddin),
-      child: Text(
-        product.description,
-        style: TextStyle(height: 1.5),
-      ),
+      padding: EdgeInsets.symmetric(vertical: kDefaultPaddin / 2),
+      child: Text(product.description,
+          style: TextStyle(
+              height: 1.5, fontWeight: FontWeight.bold, fontSize: 20)),
     );
   }
 }
@@ -146,8 +146,8 @@ class CounterFav extends StatelessWidget {
         CartCounter(),
         Container(
           padding: EdgeInsets.all(8),
-          height: 32,
-          width: 32,
+          height: 125,
+          width: 42,
           decoration: BoxDecoration(
             color: Color(0xFFFF6464),
             shape: BoxShape.circle,
@@ -229,21 +229,26 @@ class AddToCart extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: kDefaultPaddin),
       child: Row(
         children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(right: kDefaultPaddin),
-            height: 50,
-            width: 58,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(18),
-              border: Border.all(),
-            ),
-            child: IconButton(
-              icon: SvgPicture.asset(
-                "assets/icons/add_to_cart.svg",
-
-              ),
-              onPressed: () {},
-            ),
+          StoreConnector<AppState, AppState>(
+            converter: (store) => store.state,
+            builder: (_, state) {
+              return state.user != null
+                  ? Container(
+                      margin: EdgeInsets.only(right: kDefaultPaddin),
+                      height: 50,
+                      width: 58,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(18),
+                        border: Border.all(color: product.color),
+                      ),
+                      child: IconButton(
+                          icon: SvgPicture.asset("assets/icons/add_to_cart.svg",
+                              color: product.color),
+                          onPressed: () {
+                            StoreProvider.of<AppState>(context).dispatch(toggleCartProductAction(product));
+                          }))
+                  : Text('');
+            },
           ),
           Expanded(
             child: SizedBox(
@@ -251,14 +256,14 @@ class AddToCart extends StatelessWidget {
               child: FlatButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18)),
+                color: product.color,
                 onPressed: () {},
                 child: Text(
                   "Buy  Now".toUpperCase(),
                   style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
               ),
             ),

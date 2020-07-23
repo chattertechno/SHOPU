@@ -36,10 +36,50 @@ ThunkAction<AppState> getProductsAction = (Store<AppState> store) async {
   store.dispatch(GetProductsAction(products));
 };
 
+ThunkAction<AppState> logoutUserAction = (Store<AppState> store) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.remove('user');
+  User user;
+  store.dispatch(LogoutUserAction(user));
+};
+
+class LogoutUserAction {
+  final User _user;
+
+  User get user => this._user;
+
+  LogoutUserAction(this._user);
+}
+
+
 class GetProductsAction {
   final List<Product> _products;
 
   List<Product> get products => this._products; 
 
   GetProductsAction(this._products);
+}
+
+/* cart products action */
+
+ThunkAction<AppState> toggleCartProductAction(Product cartProduct) {
+  return (Store<AppState> store)  {
+    final List<Product> cartProducts = store.state.cartProducts;
+    final int index = cartProducts.indexWhere((product) => product.id == cartProduct.id);
+    bool isInCart = index > -1 == true;
+    List<Product> updatedCartProducts = List.from(cartProducts);
+    if (isInCart) {
+      updatedCartProducts.removeAt(index);
+    } else {
+      updatedCartProducts.add(cartProduct);
+    }
+    store.dispatch(ToggleCartProductAction(cartProducts));
+  };
+}
+
+class ToggleCartProductAction {
+  final List<Product> _cartProducts;
+  List<Product> get cartProducts => this._cartProducts;
+
+  ToggleCartProductAction(this._cartProducts);
 }
