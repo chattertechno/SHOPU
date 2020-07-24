@@ -233,20 +233,12 @@ class AddToCart extends StatelessWidget {
             converter: (store) => store.state,
             builder: (_, state) {
               return state.user != null
-                  ? Container(
-                      margin: EdgeInsets.only(right: kDefaultPaddin),
-                      height: 50,
-                      width: 58,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(18),
-                        border: Border.all(color: product.color),
-                      ),
-                      child: IconButton(
-                          icon: SvgPicture.asset("assets/icons/add_to_cart.svg",
-                              color: product.color),
-                          onPressed: () {
-                            StoreProvider.of<AppState>(context).dispatch(toggleCartProductAction(product));
-                          }))
+                  ? IconButton(
+                    icon: Icon(Icons.shopping_basket),
+                    onPressed: () {
+                      StoreProvider.of<AppState>(context).dispatch(toggleCartProductAction(product));
+                    },
+                  )
                   : Text('');
             },
           ),

@@ -22,14 +22,13 @@ class _CartPageState extends State<CartPage> {
                 bottom: false,
                 child: GridView.builder(
                   itemCount: state.cartProducts.length,
-                  itemBuilder: (context, index) => ItemCard(
-                    product: state.cartProducts[index],
-                  ),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     mainAxisSpacing: 4.0,
                     crossAxisSpacing: 4.0,
                     crossAxisCount: orientation == Orientation.portrait ? 2 : 3,
-                    childAspectRatio: orientation == Orientation.portrait ? 1.0 : 1.3
+                  ),
+                  itemBuilder: (context, index) => ItemCard(
+                    product: state.cartProducts[index],
                   ),
                 ),
               ),
