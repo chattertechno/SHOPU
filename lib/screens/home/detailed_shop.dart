@@ -2,7 +2,6 @@ import 'package:backg/models/app_state.dart';
 import 'package:backg/models/product.dart';
 import 'package:backg/redux/actions.dart';
 import 'package:backg/screens/constant.dart';
-import 'package:backg/screens/products/components/description.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/flutter_svg.dart';

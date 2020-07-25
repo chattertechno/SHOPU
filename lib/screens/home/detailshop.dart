@@ -24,7 +24,7 @@ class DetailShop extends StatelessWidget {
       leading: IconButton(
         icon: SvgPicture.asset(
           'assets/icons/back.svg',
-          color: Colors.white,
+          color: Colors.black,
         ),
         onPressed: () => Navigator.pop(context),
       ),

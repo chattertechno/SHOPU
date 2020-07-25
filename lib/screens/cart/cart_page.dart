@@ -57,7 +57,7 @@ class _CartPageState extends State<CartPage> {
           title: Text('Cart'),
           bottom: TabBar(
             labelColor: Colors.yellow,
-            unselectedLabelColor: Colors.green,
+            unselectedLabelColor: Colors.red,
             tabs: [
               Tab(
                 icon: Icon(Icons.shopping_basket),

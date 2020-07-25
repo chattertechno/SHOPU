@@ -1,10 +1,8 @@
 import 'package:backg/models/product.dart';
 import 'package:backg/screens/home/detailshop.dart';
-import 'package:backg/screens/products/products.dart';
 import 'package:flutter/material.dart';
 import '../../constant.dart';
 import '../../../models/product.dart';
-import '../detailed_shop.dart';
 
 class ItemCard extends StatelessWidget {
   final Product product;

@@ -29,9 +29,6 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Jeph Cakes',
         routes: {
-          '/signup': (BuildContext context) => SignUpPage(),
-          '/login': (BuildContext context) => Homepage(),
-          '/cart': (BuildContext contet) => CartPage(),
           '/': (BuildContext context) => HomeScreen(
             onInit: () {
               // dispatch get useraction yo take user data
@@ -39,7 +36,11 @@ class MyApp extends StatelessWidget {
               // dispatch products to grad products
               StoreProvider.of<AppState>(context).dispatch(getProductsAction);
             }
-          )
+          ),
+          '/signup': (BuildContext context) => SignUpPage(),
+          '/login': (BuildContext context) => Homepage(),
+          '/cart': (BuildContext contet) => CartPage(),
+          
         },
         theme: ThemeData(
             textTheme: Theme.of(context).textTheme.apply(bodyColor: kTextColor),

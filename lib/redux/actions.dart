@@ -73,7 +73,7 @@ ThunkAction<AppState> toggleCartProductAction(Product cartProduct) {
     } else {
       updatedCartProducts.add(cartProduct);
     }
-    store.dispatch(ToggleCartProductAction(cartProducts));
+    store.dispatch(ToggleCartProductAction(updatedCartProducts));
   };
 }
 
