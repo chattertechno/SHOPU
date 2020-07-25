@@ -2,6 +2,7 @@ import 'package:backg/models/app_state.dart';
 import 'package:backg/screens/home/components/item_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CartPage extends StatefulWidget {
   @override
@@ -57,10 +58,10 @@ class _CartPageState extends State<CartPage> {
           title: Text('Cart'),
           bottom: TabBar(
             labelColor: Colors.yellow,
-            unselectedLabelColor: Colors.red,
+            unselectedLabelColor: Colors.black,
             tabs: [
               Tab(
-                icon: Icon(Icons.shopping_basket),
+                icon: SvgPicture.asset("assets/icons/cart.svg", color: Colors.black,),
               ),
               Tab(
                 icon: Icon(Icons.credit_card),

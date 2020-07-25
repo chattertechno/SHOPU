@@ -1,22 +1,28 @@
 import 'package:backg/models/product.dart';
+import 'package:backg/redux/reducers.dart';
 import 'package:backg/screens/home/detailed_shop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:badges/badges.dart';
 
 import '../constant.dart';
 
 class DetailShop extends StatelessWidget {
   final Product product;
-  DetailShop({ this.product });
+  DetailShop({this.product});
+
   @override
   Widget build(BuildContext context) {
-
-    return Scaffold( 
+   
+    return Scaffold(
       backgroundColor: product.color,
       appBar: buildAppBar(context),
-      body: DetailedShop(product: product,),
+      body: DetailedShop(
+        product: product,
+      ),
     );
   }
+
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
       backgroundColor: product.color,
@@ -33,14 +39,17 @@ class DetailShop extends StatelessWidget {
           icon: SvgPicture.asset("assets/icons/search.svg"),
           onPressed: () {},
         ),
-        IconButton(
-          icon: SvgPicture.asset("assets/icons/cart.svg"),
-          onPressed: () {},
+        Badge(
+          showBadge: false,
+          badgeContent: null,
+          position: BadgePosition.topRight(top: 0.001, right: 2),
+          child: IconButton(
+            icon: SvgPicture.asset("assets/icons/cart.svg"),
+            onPressed: () => Navigator.pushNamed(context, '/cart'),
+          ),
         ),
         SizedBox(width: kDefaultPaddin / 2)
       ],
     );
   }
 }
-
-
