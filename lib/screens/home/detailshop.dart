@@ -1,55 +1,68 @@
+import 'package:backg/models/app_state.dart';
 import 'package:backg/models/product.dart';
-import 'package:backg/redux/reducers.dart';
 import 'package:backg/screens/home/detailed_shop.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:badges/badges.dart';
 
 import '../constant.dart';
 
-class DetailShop extends StatelessWidget {
+class DetailShop extends StatefulWidget {
   final Product product;
   DetailShop({this.product});
 
   @override
+  _DetailShopState createState() => _DetailShopState();
+}
+
+class _DetailShopState extends State<DetailShop> {
+  
+  @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
-      backgroundColor: product.color,
-      appBar: buildAppBar(context),
+      backgroundColor: widget.product.color,
+      appBar: buildAppBar, 
       body: DetailedShop(
-        product: product,
+        product: widget.product,
       ),
     );
   }
 
-  AppBar buildAppBar(BuildContext context) {
-    return AppBar(
-      backgroundColor: product.color,
-      elevation: 0,
-      leading: IconButton(
-        icon: SvgPicture.asset(
-          'assets/icons/back.svg',
-          color: Colors.black,
-        ),
-        onPressed: () => Navigator.pop(context),
-      ),
-      actions: <Widget>[
-        IconButton(
-          icon: SvgPicture.asset("assets/icons/search.svg"),
-          onPressed: () {},
-        ),
-        Badge(
-          showBadge: false,
-          badgeContent: null,
-          position: BadgePosition.topRight(top: 0.001, right: 2),
-          child: IconButton(
-            icon: SvgPicture.asset("assets/icons/cart.svg"),
-            onPressed: () => Navigator.pushNamed(context, '/cart'),
+  final buildAppBar = PreferredSize(
+    preferredSize: Size.fromHeight(60),
+    child: StoreConnector<AppState, AppState>(
+      converter: (store) => store.state,
+      builder: (context, state) {
+        var value = state.cartProducts.length;
+        return AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            icon: SvgPicture.asset(
+              'assets/icons/back.svg',
+              color: Colors.black,
+            ),
+            onPressed: () => Navigator.pop(context),
           ),
-        ),
-        SizedBox(width: kDefaultPaddin / 2)
-      ],
-    );
-  }
+          actions: <Widget>[
+            IconButton(
+              icon: SvgPicture.asset("assets/icons/search.svg"),
+              onPressed: () {},
+            ),
+            Badge(
+              showBadge: value < 1 == false,
+              badgeContent: Text('$value'),
+              position: BadgePosition.topRight(top: 0.001, right: 2),
+              child: IconButton(
+                icon: SvgPicture.asset("assets/icons/cart.svg"),
+                onPressed: () => Navigator.pushNamed(context, '/cart'),
+              ),
+            ),
+            SizedBox(width: kDefaultPaddin / 2)
+          ],
+        );
+      },
+    ),
+  );
 }

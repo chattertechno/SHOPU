@@ -5,6 +5,7 @@ import 'package:backg/models/product.dart';
 import 'package:backg/redux/actions.dart';
 import 'package:backg/screens/constant.dart';
 import 'package:backg/screens/home/components/body.dart';
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -41,6 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
     child: StoreConnector<AppState, AppState>(
         converter: (store) => store.state,
         builder: (context, state) {
+          var value = state.cartProducts.length;
           return AppBar(
             centerTitle: true,
             title: SizedBox(
@@ -49,7 +51,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(backgroundColor: Colors.black))
                   : FlatButton(
                       onPressed: () => Navigator.pushNamed(context, '/signup'),
-                      child: Text('Register Here', style: TextStyle(fontSize: 22),),
+                      child: Text(
+                        'Register Here',
+                        style: TextStyle(fontSize: 22),
+                      ),
                     ),
             ),
             backgroundColor: Colors.white,
@@ -73,11 +78,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 )),
             actions: <Widget>[
-              state.user != null ?
-              IconButton(
-                icon: SvgPicture.asset ("assets/icons/cart.svg", color: Colors.black,),
-                onPressed: () => Navigator.pushNamed(context, '/cart'),
-              ) : Text(''),
+              state.user != null
+                  ? Badge(
+                    position: BadgePosition.topRight(top: 2, right: 3),
+                    badgeContent: Text('$value'),
+                    showBadge: value < 1 == false,
+                      child: IconButton(
+                        icon: SvgPicture.asset(
+                          "assets/icons/cart.svg",
+                          color: Colors.black,
+                        ),
+                        onPressed: () => Navigator.pushNamed(context, '/cart'),
+                      ),
+                    )
+                  : Text(''),
               SizedBox(
                 width: kDefaultPaddin / 2,
               )
