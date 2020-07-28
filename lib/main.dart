@@ -14,7 +14,8 @@ import 'package:redux_thunk/redux_thunk.dart';
 
 void main() {
   final store = Store<AppState>(appReducer,
-      initialState: AppState.initial(), middleware: [thunkMiddleware, LoggingMiddleware.printer()]);
+      initialState: AppState.initial(),
+      middleware: [thunkMiddleware, LoggingMiddleware.printer()]);
   runApp(MyApp(store: store));
 }
 
@@ -29,23 +30,24 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Jeph Cakes',
         routes: {
-          '/': (BuildContext context) => HomeScreen(
-            onInit: () {
-              // dispatch get useraction yo take user data
-              StoreProvider.of<AppState>(context).dispatch(getUserAction);
-              // dispatch products to grad products
-              StoreProvider.of<AppState>(context).dispatch(getProductsAction);
-            }
-          ),
+          '/': (BuildContext context) => HomeScreen(onInit: () {
+                // dispatch get useraction yo take user data
+                StoreProvider.of<AppState>(context).dispatch(getUserAction);
+                // dispatch products to grad products
+                StoreProvider.of<AppState>(context).dispatch(getProductsAction);
+                // get carts product
+                StoreProvider.of<AppState>(context)
+                    .dispatch(getCartProductsAction);
+              }),
           '/signup': (BuildContext context) => SignUpPage(),
           '/login': (BuildContext context) => Homepage(),
-          '/cart': (BuildContext contet) => CartPage(),
-          
+          '/cart': (BuildContext contet) => CartPage(onInit: () {
+            StoreProvider.of<AppState>(context).dispatch(getCardsAction);
+          }),
         },
         theme: ThemeData(
             textTheme: Theme.of(context).textTheme.apply(bodyColor: kTextColor),
             visualDensity: VisualDensity.adaptivePlatformDensity),
-      
       ),
     );
   }

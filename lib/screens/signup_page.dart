@@ -32,7 +32,7 @@ class _SignUpPageState extends State<SignUpPage> {
   void _registerUser() async {
     setState(() => _isSubmitting = true);
     http.Response response = await http.post(
-        'https://api.jephcakes.com/auth/local/register',
+        'https://sol.jephcakes.com/auth/local/register',
         body: {"username": _username, "email": _email, "password": _password});
     final responseData = json.decode(response.body);
     if (response.statusCode == 200) { 
@@ -43,9 +43,8 @@ class _SignUpPageState extends State<SignUpPage> {
     print(responseData);
     } else {
      setState(() => _isSubmitting = false);
-     final List<dynamic> errorMsg = responseData['message'];
-     final String cool = (errorMsg[0]["messages"][0]["message"]);
-     _showErrorSnack(cool);
+     final String errorMsg = responseData['message'];
+     _showErrorSnack(errorMsg);
 
   }
   }
@@ -56,9 +55,9 @@ class _SignUpPageState extends State<SignUpPage> {
     json.encode(user);
     prefs.setString('user', json.encode(user));
   }
- void _showErrorSnack(String cool) {
+ void _showErrorSnack(String errorMsg) {
    final snackbar = SnackBar(
-     content: Text('$cool', style: kLabelStyle ,),
+     content: Text(errorMsg ),
    );
    _scaffoldkey.currentState.showSnackBar(snackbar);
  }

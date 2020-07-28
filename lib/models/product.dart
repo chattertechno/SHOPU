@@ -8,7 +8,7 @@ class Product {
   String id;
   num price;
   int size;
-  List<dynamic> picture;
+  Map<String, dynamic> picture;
   Color color;
   Product({
     this.id,

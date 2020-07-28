@@ -14,7 +14,7 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String pictureUrl = 
-        'https://api.jephcakes.com${product.picture[0]['url']}';
+        'https://sol.jephcakes.com${product.picture['url']}';
     return InkWell(
       onTap: press, 
       child: GestureDetector(
