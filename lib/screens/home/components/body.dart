@@ -60,6 +60,30 @@ class _BodyState extends State<Body> {
                 ),
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(1.0),
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 20.0),
+                width: double.infinity,
+                child: RaisedButton(
+                  elevation: 8.0,
+                  onPressed: () => print('order'),
+                  padding: EdgeInsets.all(16.0),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0)),
+                  color: Colors.black,
+                  child: Text(
+                    'Custom Order',
+                    style: TextStyle(
+                      color: Color(0xFF527DAA),
+                      letterSpacing: 1.5,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            )
           ],
         );
       },

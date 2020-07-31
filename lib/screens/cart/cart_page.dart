@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:backg/models/app_state.dart';
 import 'package:backg/models/user.dart';
 import 'package:backg/redux/actions.dart';
+import 'package:backg/screens/constant.dart';
 import 'package:backg/screens/home/components/item_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -64,15 +65,15 @@ class _CartPageState extends State<CartPage> {
       return StoreConnector<AppState, AppState>(
         converter: (store) => store.state,
         builder: (_, state) {
-           _addCard(renee) async {
+           _addCard(cardToken) async {
              final User user =state.user;
              await http.put('https://sol.jephcakes.com/users/${user.id}', body: {
-               "card_token": renee
+               "card_token": cardToken
              }, headers: {
                "Authorization": "Bearer ${user.jwt}"
              });
              http.Response response = await http.post('http://sol.jephcakes.com/card/add', body: {
-               "source": renee, "customer": user.customerId
+               "source": cardToken, "customer": user.customerId
              });
              final responseData = json.decode(response.body);
              return responseData;
@@ -85,8 +86,8 @@ class _CartPageState extends State<CartPage> {
               elevation: 8.0,
               child: Text('Add Card'),
               onPressed: () async {
-                var renee = StripePayment.paymentRequestWithCardForm(CardFormPaymentRequest());
-                var card = await _addCard(renee);
+                var cardToken = StripePayment.paymentRequestWithCardForm(CardFormPaymentRequest());
+                var card = await _addCard(cardToken);
                 StoreProvider.of<AppState>(context).dispatch(AddCardAction(card));
                 StoreProvider.of<AppState>(context).dispatch(UpdateCardTokenAction(card['id']));
 
@@ -106,14 +107,14 @@ class _CartPageState extends State<CartPage> {
                       color: Colors.white,
                     ),
                   ),
-                  title: Text(''),
-                  subtitle: Text(''),
+                  title: Text('${c['exp_month']}/${c['exp_year']}, ${c['last4']}'),
+                  subtitle: Text('${c['brand']}', style: TextStyle(color: kTextColor),),
                   trailing: FlatButton(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
 
                     ),
-                    child: Text('Set AS pRIMARY', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.pink),),
+                    child: Text('Set AS Primary', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.pink),),
                     onPressed: () {},
                   ),
                 )),).toList()

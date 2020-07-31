@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         store: store,
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Inauzwa',
+          title: 'Jeph Cakes',
           routes: {
             '/': (BuildContext context) => HomeScreen(onInit: () {
                   StoreProvider.of<AppState>(context).dispatch(getUserAction);
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
                   // dispatch an action(getuseraction) to grab user data
                 }),
             '/login': (BuildContext context) => Homepage(),
-            '/register': (BuildContext context) => SignUpPage(),
+            '/signup': (BuildContext context) => SignUpPage(),
             '/cart': (BuildContext context) => CartPage(onInit: () {
                   StoreProvider.of<AppState>(context).dispatch(getCardsAction);
                 })
