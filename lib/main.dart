@@ -25,30 +25,29 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreProvider(
-      store: store,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Jeph Cakes',
-        routes: {
-          '/': (BuildContext context) => HomeScreen(onInit: () {
-                // dispatch get useraction yo take user data
-                StoreProvider.of<AppState>(context).dispatch(getUserAction);
-                // dispatch products to grad products
-                StoreProvider.of<AppState>(context).dispatch(getProductsAction);
-                // get carts product
-                StoreProvider.of<AppState>(context)
-                    .dispatch(getCartProductsAction);
-              }),
-          '/signup': (BuildContext context) => SignUpPage(),
-          '/login': (BuildContext context) => Homepage(),
-          '/cart': (BuildContext contet) => CartPage(onInit: () {
-            StoreProvider.of<AppState>(context).dispatch(getCardsAction);
-          }),
-        },
-        theme: ThemeData(
-            textTheme: Theme.of(context).textTheme.apply(bodyColor: kTextColor),
-            visualDensity: VisualDensity.adaptivePlatformDensity),
-      ),
-    );
+        store: store,
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Inauzwa',
+          routes: {
+            '/': (BuildContext context) => HomeScreen(onInit: () {
+                  StoreProvider.of<AppState>(context).dispatch(getUserAction);
+                  StoreProvider.of<AppState>(context)
+                      .dispatch(getProductsAction);
+                  StoreProvider.of<AppState>(context)
+                      .dispatch(getCartProductsAction);
+                  // dispatch an action(getuseraction) to grab user data
+                }),
+            '/login': (BuildContext context) => Homepage(),
+            '/register': (BuildContext context) => SignUpPage(),
+            '/cart': (BuildContext context) => CartPage(onInit: () {
+                  StoreProvider.of<AppState>(context).dispatch(getCardsAction);
+                })
+          },
+          theme: ThemeData(
+              textTheme:
+                  Theme.of(context).textTheme.apply(bodyColor: kTextColor),
+              visualDensity: VisualDensity.adaptivePlatformDensity),
+        ));
   }
 }

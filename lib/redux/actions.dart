@@ -128,6 +128,33 @@ class ToggleCartProductAction {
 ThunkAction<AppState> getCardsAction = (Store<AppState> store) async {
  final String customerId = store.state.user.customerId;
  http.Response response = await http.get('https://sol.jephcakes.com/card?$customerId');
- final responseData = json.decode(response.body);
- print('card Data: $responseData');  
+ final responseData = json.decode(response.body); 
+ print('card Data: $responseData');
+ store.dispatch(GetCardsAction(responseData));  
 };
+
+class GetCardsAction {
+  final List<dynamic> _cards;
+
+  List<dynamic> get cards => this._cards;
+
+  GetCardsAction(this._cards);
+}
+
+class AddCardAction {
+  final dynamic _card;
+
+  dynamic get card => this._card;
+
+  AddCardAction(this._card);
+}
+
+/* card tokem */
+
+class UpdateCardTokenAction {
+  final String _cardToken;
+
+  String get cardToken => this._cardToken;
+
+  UpdateCardTokenAction(this._cardToken);
+}
