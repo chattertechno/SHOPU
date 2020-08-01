@@ -65,9 +65,35 @@ class _BodyState extends State<Body> {
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 20.0),
                 width: double.infinity,
-                child: RaisedButton(
+                child: state.user != null ? RaisedButton(
                   elevation: 8.0,
-                  onPressed: () => print('order'),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          content: Stack(
+                            overflow: Overflow.visible,
+                            children: [
+                              Positioned(
+                                right: -40.0,
+                                top: -40.0,
+                                child: InkResponse(
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: CircleAvatar(
+                                    child: Icon(Icons.close),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    );
+                  },
                   padding: EdgeInsets.all(16.0),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0)),
@@ -81,7 +107,7 @@ class _BodyState extends State<Body> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
+                ) : null
               ),
             )
           ],
