@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:backg/models/app_state.dart';
 import 'package:backg/models/order.dart';
-import 'package:backg/models/user.dart';
 import 'package:backg/redux/actions.dart';
 import 'package:backg/screens/constant.dart';
 import 'package:backg/screens/home/components/item_card.dart';

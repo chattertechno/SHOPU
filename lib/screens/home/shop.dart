@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:backg/models/app_state.dart';
 import 'package:backg/models/product.dart';
@@ -9,7 +8,6 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   final Product product;

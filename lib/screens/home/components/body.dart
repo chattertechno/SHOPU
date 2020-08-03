@@ -1,11 +1,8 @@
 import 'package:backg/models/app_state.dart';
-import 'package:backg/models/product.dart';
-import 'package:backg/screens/products/products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import '../../constant.dart';
-import 'categories.dart';
 import 'item_card.dart';
 
 class Body extends StatefulWidget {

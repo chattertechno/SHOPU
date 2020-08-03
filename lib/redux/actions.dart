@@ -1,12 +1,10 @@
 /* USER ACTIONS */
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:backg/models/app_state.dart';
 import 'package:backg/models/order.dart';
 import 'package:backg/models/product.dart';
 import 'package:backg/models/user.dart';
-import 'package:backg/screens/home/detailed_shop.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:shared_preferences/shared_preferences.dart';
