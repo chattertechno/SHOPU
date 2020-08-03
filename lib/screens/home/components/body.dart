@@ -33,7 +33,8 @@ class _BodyState extends State<Body> {
                     .copyWith(fontWeight: FontWeight.bold),
               ),
             ),
-            Categories(),
+            // Categories(),
+            SizedBox(height: 20,),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
@@ -68,31 +69,32 @@ class _BodyState extends State<Body> {
                 child: state.user != null ? RaisedButton(
                   elevation: 8.0,
                   onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          content: Stack(
-                            overflow: Overflow.visible,
-                            children: [
-                              Positioned(
-                                right: -40.0,
-                                top: -40.0,
-                                child: InkResponse(
-                                  onTap: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: CircleAvatar(
-                                    child: Icon(Icons.close),
-                                    backgroundColor: Colors.red,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }
-                    );
+                    // showDialog(
+                    //   context: context,
+                    //   builder: (BuildContext context) {
+                    //     return AlertDialog(
+                    //       content: Stack(
+                    //         overflow: Overflow.visible,
+                    //         children: [
+                    //           Positioned(
+                    //             right: -40.0,
+                    //             top: -40.0,
+                    //             child: InkResponse(
+                    //               onTap: () {
+                    //                 Navigator.of(context).pop();
+                    //               },
+                    //               child: CircleAvatar(
+                    //                 child: Icon(Icons.close),
+                    //                 backgroundColor: Colors.red,
+                    //               ),
+                    //             ),
+                    //           ),
+                    //           Text('hey igly')
+                    //         ],
+                    //       ),
+                    //     );
+                    //   }
+                    // );
                   },
                   padding: EdgeInsets.all(16.0),
                   shape: RoundedRectangleBorder(
@@ -109,7 +111,7 @@ class _BodyState extends State<Body> {
                   ),
                 ) : null
               ),
-            )
+            ),
           ],
         );
       },

@@ -25,12 +25,65 @@ class _HomeScreenState extends State<HomeScreen> {
     widget.onInit();
   }
 
+  int selectedindex = 0;
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, AppState>(
         converter: (store) => store.state,
         builder: (context, state) {
           return Scaffold(
+            // bottomNavigationBar: Container(
+            //   height: 50,
+            //   width: MediaQuery.of(context).size.width,
+            //   decoration: BoxDecoration(
+            //     color: Colors.white,
+            //     borderRadius: BorderRadius.only(
+            //       topLeft: Radius.circular(16.0),
+            //       topRight: Radius.circular(16.0),
+            //     ),
+            //   ),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //     children: <Widget>[
+            //       IconButton(
+            //           icon: Icon(
+            //             Icons.search,
+            //             size: 32.0,
+            //           ),
+            //           onPressed: () {}),
+            //       IconButton(
+            //           icon: Icon(
+            //             Icons.photo_filter,
+            //             color: Colors.black87,
+            //             size: 32.0,
+            //           ),
+            //           onPressed: () {}),
+            //       Container(
+            //         alignment: Alignment.center,
+            //         height: 50,
+            //         width: 62,
+            //         decoration: BoxDecoration(
+            //           borderRadius: BorderRadius.circular(8.0),
+            //           color: Colors.grey[200],
+            //         ),
+            //         child: IconButton(
+            //           icon: Icon(
+            //             Icons.fullscreen_exit,
+            //             size: 28.0,
+            //           ),
+            //           onPressed: () {},
+            //         ),
+            //       ),
+            //       IconButton(
+            //           icon: Icon(
+            //             Icons.favorite_border,
+            //             size: 32.0,
+            //           ),
+            //           onPressed: () {}),
+            //     ],
+            //   ),
+            // ),
             appBar: buildAppBar,
             body: Body(),
           );
@@ -80,9 +133,9 @@ class _HomeScreenState extends State<HomeScreen> {
             actions: <Widget>[
               state.user != null
                   ? Badge(
-                    position: BadgePosition.topRight(top: 2, right: 3),
-                    badgeContent: Text('$value'),
-                    showBadge: value < 1 == false,
+                      position: BadgePosition.topRight(top: 2, right: 3),
+                      badgeContent: Text('$value'),
+                      showBadge: value < 1 == false,
                       child: IconButton(
                         icon: SvgPicture.asset(
                           "assets/icons/cart.svg",

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:backg/models/app_state.dart';
+import 'package:backg/models/order.dart';
 import 'package:backg/models/product.dart';
 import 'package:backg/models/user.dart';
 import 'package:backg/screens/home/detailed_shop.dart';
@@ -100,7 +101,7 @@ ThunkAction<AppState> getCartProductsAction = (Store<AppState> store) async {
       'https://sol.jephcakes.com/carts/${user.cartId}',
       headers: {'Authorization': 'Bearer ${user.jwt}'});
   final responseData = json.decode(response.body)['products'];
-  print(responseData);
+  // print(responseData);
   List<Product> cartProducts = [];
   responseData.forEach((productData) {
     final Product product = Product.fromJson(productData);
@@ -108,6 +109,25 @@ ThunkAction<AppState> getCartProductsAction = (Store<AppState> store) async {
   });
   store.dispatch(GetCartProductsAction(cartProducts));
 };
+
+ThunkAction<AppState> clearCartProductsAction = (Store<AppState> store) async {
+  final User user = store.state.user;
+  await http.put('https://sol.jephcakes.com/carts/${user.cartId}', body: {
+    "products": json.encode([])
+  }, headers: {
+    'Authorization': 'Bearer ${user.jwt}'
+  }
+  );
+  store.dispatch(ClearCartProductsAction(List(0)));
+};
+class ClearCartProductsAction {
+  final List<Product> _cartProducts;
+
+  List<Product> get cartProducts => this._cartProducts;
+
+  ClearCartProductsAction(this._cartProducts);
+}
+
 
 class GetCartProductsAction {
   final List<Product> _cartProducts;
@@ -129,7 +149,7 @@ ThunkAction<AppState> getCardsAction = (Store<AppState> store) async {
  final String customerId = store.state.user.customerId;
  http.Response response = await http.get('https://sol.jephcakes.com/card?$customerId');
  final responseData = json.decode(response.body); 
- print('card Data: $responseData');
+ //  print('card Data: $responseData');
  store.dispatch(GetCardsAction(responseData));  
 };
 
@@ -157,4 +177,11 @@ class UpdateCardTokenAction {
   String get cardToken => this._cardToken;
 
   UpdateCardTokenAction(this._cardToken);
+}
+
+class AddOrderAction {
+  final Order _order;
+  Order get order => this._order;
+
+  AddOrderAction(this._order);
 }

@@ -1,3 +1,4 @@
+import 'package:backg/models/order.dart';
 import 'package:backg/models/product.dart';
 import 'package:backg/models/user.dart';
 import 'package:meta/meta.dart';
@@ -9,8 +10,9 @@ class AppState {
   final List<Product> cartProducts;
   final List<dynamic> cards;
   final String cardToken;
+  final List<Order> orders;
 
-  AppState({ @required this.user, @required this.products, @required this.cartProducts, @required this.cards, @required this.cardToken});
+  AppState({ @required this.user, @required this.products, @required this.cartProducts, @required this.cards, @required this.cardToken, @required this.orders});
 
   factory AppState.initial() {
     return AppState(
@@ -18,7 +20,8 @@ class AppState {
       products: [],
       cartProducts: [],
       cards: [],
-      cardToken: ''
+      cardToken: '',
+      orders: []
     );
   }
 }
