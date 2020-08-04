@@ -237,7 +237,7 @@ class AddToCart extends StatelessWidget {
             builder: (_, state) {
               return state.user != null
                   ? IconButton(
-                    icon: SvgPicture.asset("assets/icons/add_to_cart.svg", color: _isInCart(state, product.id) ? Colors.black : product.color),
+                    icon: SvgPicture.asset("assets/icons/add_to_cart.svg", color: _isInCart(state, product.id) ? Colors.red : product.color),
                     onPressed: () {
                       StoreProvider.of<AppState>(context).dispatch(toggleCartProductAction(product));
                     },

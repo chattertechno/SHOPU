@@ -1,4 +1,5 @@
 import 'package:backg/models/app_state.dart';
+import 'package:backg/screens/home/components/categories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -30,8 +31,10 @@ class _BodyState extends State<Body> {
                     .copyWith(fontWeight: FontWeight.bold),
               ),
             ),
-            // Categories(),
-            SizedBox(height: 20,),
+            Categories(),
+            SizedBox(
+              height: 20,
+            ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
@@ -61,53 +64,96 @@ class _BodyState extends State<Body> {
             Padding(
               padding: const EdgeInsets.all(1.0),
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 20.0),
-                width: double.infinity,
-                child: state.user != null ? RaisedButton(
-                  elevation: 8.0,
-                  onPressed: () {
-                    // showDialog(
-                    //   context: context,
-                    //   builder: (BuildContext context) {
-                    //     return AlertDialog(
-                    //       content: Stack(
-                    //         overflow: Overflow.visible,
-                    //         children: [
-                    //           Positioned(
-                    //             right: -40.0,
-                    //             top: -40.0,
-                    //             child: InkResponse(
-                    //               onTap: () {
-                    //                 Navigator.of(context).pop();
-                    //               },
-                    //               child: CircleAvatar(
-                    //                 child: Icon(Icons.close),
-                    //                 backgroundColor: Colors.red,
-                    //               ),
-                    //             ),
-                    //           ),
-                    //           Text('hey igly')
-                    //         ],
-                    //       ),
-                    //     );
-                    //   }
-                    // );
-                  },
-                  padding: EdgeInsets.all(16.0),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0)),
-                  color: Colors.black,
-                  child: Text(
-                    'Custom Order',
-                    style: TextStyle(
-                      color: Color(0xFF527DAA),
-                      letterSpacing: 1.5,
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ) : null
-              ),
+                  padding: EdgeInsets.symmetric(vertical: 20.0),
+                  width: double.infinity,
+                  child: state.user != null
+                      ? RaisedButton(
+                          elevation: 8.0,
+                          onPressed: () {
+                            // showDialog(
+                            //   context: context,
+                            //   builder: (BuildContext context) {
+                            //     return AlertDialog(
+                            //       content: Stack(
+                            //         overflow: Overflow.visible,
+                            //         children: [
+                            //           Positioned(
+                            //             right: -40.0,
+                            //             top: -40.0,
+                            //             child: InkResponse(
+                            //               onTap: () {
+                            //                 Navigator.of(context).pop();
+                            //               },
+                            //               child: CircleAvatar(
+                            //                 child: Icon(Icons.close),
+                            //                 backgroundColor: Colors.red,
+                            //               ),
+                            //             ),
+                            //           ),
+                            //           Text('hey igly')
+                            //         ],
+                            //       ),
+                            //     );
+                            //   }
+                            // );
+                          },
+                          padding: EdgeInsets.all(16.0),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0)),
+                          color: Colors.black,
+                          child: Text(
+                            'Custom Order',
+                            style: TextStyle(
+                              color: Color(0xFF527DAA),
+                              letterSpacing: 1.5,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        )
+                      : Row(
+                          children: [
+                            SizedBox(
+                              width: 5,
+                            ),
+                            SizedBox(
+                              height: 40,
+                              width: 200,
+                              child: FlatButton(
+                                onPressed: () => Navigator.pushNamed(context, '/login'),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15.0)),
+                                color: Colors.orange,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.symmetric(vertical: 12),
+                                  child: Text(
+                                    'Login',
+                                    style: TextStyle(
+                                        color: kTextColor,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            SizedBox(
+                              height: 40,
+                              width: 180,
+                              child: FlatButton(
+                                onPressed: () => Navigator.pushNamed(context, '/signup'),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+                                color: Colors.blue,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child: Text('Register', style: TextStyle(color: kTextColor),),
+                                ),
+                              ),
+                            )
+                          ],
+                        )),
             ),
           ],
         );

@@ -99,14 +99,11 @@ class _HomeScreenState extends State<HomeScreen> {
             title: SizedBox(
               child: state.user != null
                   ? Text(state.user.username,
-                      style: TextStyle(backgroundColor: Colors.black))
-                  : FlatButton(
-                      onPressed: () => Navigator.pushNamed(context, '/signup'),
-                      child: Text(
-                        'Register Here',
-                        style: TextStyle(fontSize: 22),
-                      ),
-                    ),
+                      style: TextStyle(color: Colors.black))
+                  : Text(
+                    'Jeph Cakes',
+                    style: TextStyle(fontSize: 22, color: Colors.black),
+                  ),
             ),
             backgroundColor: Colors.white,
             elevation: 0,

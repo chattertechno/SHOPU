@@ -1,5 +1,6 @@
 import 'package:backg/models/app_state.dart';
 import 'package:backg/models/product.dart';
+import 'package:backg/models/user.dart';
 import 'package:backg/screens/home/detailed_shop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -34,6 +35,7 @@ class _DetailShopState extends State<DetailShop> {
     child: StoreConnector<AppState, AppState>(
       converter: (store) => store.state,
       builder: (context, state) {
+        final User user = state.user;
         var value = state.cartProducts.length;
         return AppBar(
           backgroundColor: Colors.transparent,
@@ -46,10 +48,12 @@ class _DetailShopState extends State<DetailShop> {
             onPressed: () => Navigator.pop(context),
           ),
           actions: <Widget>[
+            state.user != null ?
             IconButton(
               icon: SvgPicture.asset("assets/icons/search.svg"),
               onPressed: () {},
-            ),
+            ) : Text(''),
+            state.user != null ?
             Badge(
               showBadge: value < 1 == false,
               badgeContent: Text('$value'),
@@ -58,7 +62,7 @@ class _DetailShopState extends State<DetailShop> {
                 icon: SvgPicture.asset("assets/icons/cart.svg"),
                 onPressed: () => Navigator.pushNamed(context, '/cart'),
               ),
-            ),
+            ) : Text(''),
             SizedBox(width: kDefaultPaddin / 2)
           ],
         );
