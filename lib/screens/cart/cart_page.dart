@@ -174,6 +174,7 @@ class _CartPageState extends State<CartPage> {
                         ],
                       ),
                     )
+                    
                   ]);
       },
     );
@@ -196,7 +197,7 @@ Future _showSuccessDialog() {
         children: [
           Padding(
             padding: EdgeInsets.all(20.0),
-            child: Text('Order Successfull'),
+            child: Text('Order Pending'),
           )
         ],
       );
@@ -267,7 +268,8 @@ Future _showSuccessDialog() {
                                     "amount":
                                         calculateTotalPrice(state.cartProducts),
                                     "products": json.encode(state.cartProducts),
-                                    "customer": state.user.customerId
+                                    "customer": state.user.customerId,
+                                    "Status": "pending"
                                   },
                                   headers: {
                                     'Authorization': 'Bearer ${state.user.jwt}'

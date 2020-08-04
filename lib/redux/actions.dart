@@ -183,3 +183,27 @@ class AddOrderAction {
 
   AddOrderAction(this._order);
 }
+
+// /* get orders */
+// ThunkAction<AppState> getOrdersAction = (Store<AppState> store) async {
+//   final User user = store.state.user;
+//   http.Response response = await http.get('https://sol.jephcakes.com/orders', headers: {
+//     'Authorization': 'Bearer ${user.jwt}'
+//   });
+//   final List<dynamic> responseData = json.decode(response.body);
+//   List<Product> orders = [];
+//   responseData.forEach((ordersData) {
+//     final Product order = Product.fromJson(ordersData);
+//     orders.add(order);
+//   });
+//   store.dispatch(GetOrdersAction(orders));
+// };
+
+
+// class GetOrdersAction {
+//   final List<Product> _orders;
+
+//   List<Product> get orders => this._orders;
+
+//   GetOrdersAction(this._orders);
+// }

@@ -14,7 +14,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final _formkey = GlobalKey<FormState>();
   final _scaffoldkey = GlobalKey<ScaffoldState>();
 
-  String _username, _email, _password;
+  String _username, _email, _password, _phonenumber;
   bool _isSubmitting, _obscureText = true;
 
   void _submit() {
@@ -33,7 +33,7 @@ class _SignUpPageState extends State<SignUpPage> {
     setState(() => _isSubmitting = true);
     http.Response response = await http.post(
         'https://sol.jephcakes.com/auth/local/register',
-        body: {"username": _username, "email": _email, "password": _password});
+        body: {"username": _username, "email": _email, "password": _password, "phonenumber": _phonenumber});
     final responseData = json.decode(response.body);
     if (response.statusCode == 200) { 
     setState(() => _isSubmitting = false);
@@ -148,6 +148,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     decoration: kBoxDecorationStyle,
                                     height: 60.0,
                                     child: TextFormField(
+                                      keyboardType: TextInputType.emailAddress,
                                       onSaved: (val) => _email = val,
                                       autofocus: true,
                                       validator: (val) => !val.contains('@')
@@ -206,6 +207,33 @@ class _SignUpPageState extends State<SignUpPage> {
                                   SizedBox(
                                     height: 10.0,
                                   ),
+                                  Text('Phone Number', style: kLabelStyle,),
+                                  Container(
+                                    alignment: Alignment.centerLeft,
+                                    decoration: kBoxDecorationStyle,
+                                    child: TextFormField(
+                                      keyboardType: TextInputType.number,
+                                      onSaved: (val) => _phonenumber = val,
+                                      validator: (val) => val.length < 10
+                                          ? 'Phone Number too short'
+                                          : null,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: 'OpenSans'),
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          contentPadding:
+                                              EdgeInsets.only(top: 14.0),
+                                          prefixIcon: Icon(
+                                            Icons.confirmation_number,
+                                            color: Colors.white,
+                                          ),
+                                          hintText:
+                                              'Enter Phone Number ',
+                                          hintStyle: kHintTextStyle),
+                                    ),
+                                  ),
+                                  SizedBox(height: 10.0,),
                                   Text(
                                     'Enter Your Password',
                                     style: kLabelStyle,
