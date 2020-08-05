@@ -1,5 +1,4 @@
 import 'package:backg/models/app_state.dart';
-import 'package:backg/screens/home/components/categories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -24,14 +23,14 @@ class _BodyState extends State<Body> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
               child: Text(
-                "Cakes",
+                "Shop",
                 style: Theme.of(context)
                     .textTheme
                     .headline5
                     .copyWith(fontWeight: FontWeight.bold),
               ),
             ),
-            Categories(),
+          //  Categories(),
             SizedBox(
               height: 20,
             ),
@@ -62,55 +61,11 @@ class _BodyState extends State<Body> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(1.0),
+              padding: const EdgeInsets.all(0.1),
               child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 20.0),
                   width: double.infinity,
                   child: state.user != null
-                      ? RaisedButton(
-                          elevation: 8.0,
-                          onPressed: () {
-                            // showDialog(
-                            //   context: context,
-                            //   builder: (BuildContext context) {
-                            //     return AlertDialog(
-                            //       content: Stack(
-                            //         overflow: Overflow.visible,
-                            //         children: [
-                            //           Positioned(
-                            //             right: -40.0,
-                            //             top: -40.0,
-                            //             child: InkResponse(
-                            //               onTap: () {
-                            //                 Navigator.of(context).pop();
-                            //               },
-                            //               child: CircleAvatar(
-                            //                 child: Icon(Icons.close),
-                            //                 backgroundColor: Colors.red,
-                            //               ),
-                            //             ),
-                            //           ),
-                            //           Text('hey igly')
-                            //         ],
-                            //       ),
-                            //     );
-                            //   }
-                            // );
-                          },
-                          padding: EdgeInsets.all(16.0),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0)),
-                          color: Colors.black,
-                          child: Text(
-                            'Custom Order',
-                            style: TextStyle(
-                              color: Color(0xFF527DAA),
-                              letterSpacing: 1.5,
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        )
+                      ? Text('')
                       : Row(
                           children: [
                             SizedBox(

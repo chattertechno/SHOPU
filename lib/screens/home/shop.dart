@@ -1,4 +1,3 @@
-
 import 'package:backg/models/app_state.dart';
 import 'package:backg/models/product.dart';
 import 'package:backg/redux/actions.dart';
@@ -8,6 +7,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   final Product product;
@@ -18,72 +18,67 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
   void initState() {
     super.initState();
     widget.onInit();
   }
+  
 
-  int selectedindex = 0;
+  int currentindex = 0;
+  final List<Widget> _children = [
+    Body(),
+    Text('Hello World'),
+    Text('Hey dude'),
+    Text('dude')
+  ];
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, AppState>(
         converter: (store) => store.state,
         builder: (context, state) {
+          // final User user = state.user;
           return Scaffold(
-            // bottomNavigationBar: Container(
-            //   height: 50,
-            //   width: MediaQuery.of(context).size.width,
-            //   decoration: BoxDecoration(
-            //     color: Colors.white,
-            //     borderRadius: BorderRadius.only(
-            //       topLeft: Radius.circular(16.0),
-            //       topRight: Radius.circular(16.0),
-            //     ),
-            //   ),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //     children: <Widget>[
-            //       IconButton(
-            //           icon: Icon(
-            //             Icons.search,
-            //             size: 32.0,
-            //           ),
-            //           onPressed: () {}),
-            //       IconButton(
-            //           icon: Icon(
-            //             Icons.photo_filter,
-            //             color: Colors.black87,
-            //             size: 32.0,
-            //           ),
-            //           onPressed: () {}),
-            //       Container(
-            //         alignment: Alignment.center,
-            //         height: 50,
-            //         width: 62,
-            //         decoration: BoxDecoration(
-            //           borderRadius: BorderRadius.circular(8.0),
-            //           color: Colors.grey[200],
-            //         ),
-            //         child: IconButton(
-            //           icon: Icon(
-            //             Icons.fullscreen_exit,
-            //             size: 28.0,
-            //           ),
-            //           onPressed: () {},
-            //         ),
-            //       ),
-            //       IconButton(
-            //           icon: Icon(
-            //             Icons.favorite_border,
-            //             size: 32.0,
-            //           ),
-            //           onPressed: () {}),
-            //     ],
-            //   ),
-            // ),
+            bottomNavigationBar: state.user != null
+                ? BottomNavyBar(
+                    showElevation: true,
+                    selectedIndex: currentindex,
+                    onItemSelected: (index) => setState(() {
+                      currentindex = index;
+                    }),
+                    items: [
+                      BottomNavyBarItem(
+                        icon: Icon(Icons.shop_two),
+                        title: Text('Cakes'),
+                        activeColor: Colors.red,
+                        textAlign: TextAlign.center,
+                      ),
+                      BottomNavyBarItem(
+                        icon: Icon(Icons.pan_tool),
+                        title: Text('Tools'),
+                        activeColor: Colors.purpleAccent,
+                        textAlign: TextAlign.center,
+                      ),
+                      BottomNavyBarItem(
+                        icon: Icon(Icons.shopping_cart),
+                        title: Text(
+                          'Custom Order',
+                        ),
+                        activeColor: Colors.pink,
+                        textAlign: TextAlign.center,
+                      ),
+                      BottomNavyBarItem(
+                        icon: Icon(Icons.settings),
+                        title: Text('Settings'),
+                        activeColor: Colors.blue,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  )
+                : Text(''),
             appBar: buildAppBar,
-            body: Body(),
+            body: _children[currentindex],
           );
         });
   }
@@ -101,9 +96,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ? Text(state.user.username,
                       style: TextStyle(color: Colors.black))
                   : Text(
-                    'Jeph Cakes',
-                    style: TextStyle(fontSize: 22, color: Colors.black),
-                  ),
+                      'Jeph Cakes:',
+                      style: TextStyle(fontSize: 22, color: Colors.black),
+                    ),
             ),
             backgroundColor: Colors.white,
             elevation: 0,

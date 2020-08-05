@@ -35,7 +35,7 @@ class _DetailShopState extends State<DetailShop> {
     child: StoreConnector<AppState, AppState>(
       converter: (store) => store.state,
       builder: (context, state) {
-        final User user = state.user;
+       
         var value = state.cartProducts.length;
         return AppBar(
           backgroundColor: Colors.transparent,
