@@ -174,7 +174,6 @@ class _CartPageState extends State<CartPage> {
                         ],
                       ),
                     )
-                    
                   ]);
       },
     );
@@ -188,22 +187,22 @@ class _CartPageState extends State<CartPage> {
     return totalprice.toStringAsFixed(2);
   }
 
-Future _showSuccessDialog() {
-  return showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return SimpleDialog(
-        title: Text('Sucess'),
-        children: [
-          Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Text('Order Pending'),
-          )
-        ],
-      );
-    }
-  );
-}
+  Future _showSuccessDialog() {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            title: Text('Status'),
+            children: [
+              Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Text('Order Pending'),
+              )
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, AppState>(
@@ -224,25 +223,109 @@ Future _showSuccessDialog() {
                         ),
                         onPressed: () {
                           showDialog(
+                            
                               context: context,
                               builder: (BuildContext context) {
                                 String cartSummary = '';
                                 state.cartProducts.forEach((cartProduct) {
                                   cartSummary +=
-                                      '. ${cartProduct.name}, \Tsh ${cartProduct.price}\n';
+                                      ' ${cartProduct.name}, \Tsh ${cartProduct.price}\n';
                                 });
                                 return AlertDialog(
-                                  title: Text('checkout'),
-                                  content: SingleChildScrollView(
-                                    child: ListBody(
-                                      children: [
-                                        Text(
-                                            'Cart Items (${state.cartProducts.length})'),
-                                        Text('$cartSummary'),
-                                        Text(
-                                            'Order Total \Tsh ${calculateTotalPrice(state.cartProducts)}')
-                                      ],
-                                    ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(20.0))
+                                  ),
+                                  contentPadding: EdgeInsets.all(40.0),
+                                  title: Text('checkout'.toUpperCase(), style: TextStyle(letterSpacing: 1.5),),
+                                  content: Column(
+                                    children: [
+                                      SingleChildScrollView(
+                                        child: ListBody(
+                                          children: [
+                                            Text(
+                                                'Cart Items (${state.cartProducts.length})'),
+                                            Text('$cartSummary'),
+                                            Text(
+                                                'Order Total \Tsh ${calculateTotalPrice(state.cartProducts)}'),
+                                                SizedBox(height: 15.0,),
+                                                Text('Please Pay Tsh ${calculateTotalPrice(state.cartProducts)} to 05383838 ')
+                                          ],
+                                        ),
+                                      ),
+                                      Form(
+                                        child: Column(
+                                          children: [
+                                            SizedBox(
+                                              height: 10.0,
+                                            ),
+                                            Container(
+                                              alignment: Alignment.centerLeft,
+                                              decoration: kBoxDecorationStyle,
+                                              height: 60.0,
+                                              child: TextFormField(
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontFamily: 'OpenSans'),
+                                                decoration: InputDecoration(
+                                                    border: InputBorder.none,
+                                                    contentPadding:
+                                                        EdgeInsets.only(
+                                                            top: 14.0),
+                                                    prefixIcon:
+                                                        Icon(Icons.shop),
+                                                    hintText: 'Enter Tx number',
+                                                    hintStyle: kHintTextStyle),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 10.0,
+                                            ),
+                                            Container(
+                                              alignment: Alignment.centerLeft,
+                                              decoration: kBoxDecorationStyle,
+                                              height: 60.0,
+                                              child: TextFormField(
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontFamily: 'OpenSans'),
+                                                decoration: InputDecoration(
+                                                    border: InputBorder.none,
+                                                    contentPadding:
+                                                        EdgeInsets.only(
+                                                            top: 14.0),
+                                                    prefixIcon:
+                                                        Icon(Icons.shop),
+                                                    hintText: 'Enter Tx number',
+                                                    hintStyle: kHintTextStyle),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 10.0,
+                                            ),
+                                            Container(
+                                              alignment: Alignment.centerLeft,
+                                              decoration: kBoxDecorationStyle,
+                                              height: 60.0,
+                                              child: TextFormField(
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontFamily: 'OpenSans'),
+                                                decoration: InputDecoration(
+                                                    border: InputBorder.none,
+                                                    contentPadding:
+                                                        EdgeInsets.only(
+                                                            top: 14.0),
+                                                    prefixIcon:
+                                                        Icon(Icons.shop),
+                                                    hintText: 'Enter Tx number',
+                                                    hintStyle: kHintTextStyle),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      
+                                    ],
                                   ),
                                   actions: [
                                     FlatButton(

@@ -61,9 +61,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         textAlign: TextAlign.center,
                       ),
                       BottomNavyBarItem(
-                        icon: Icon(Icons.shopping_cart),
+                        icon: Icon(Icons.favorite),
                         title: Text(
-                          'Custom Order',
+                          'Favorites',
                         ),
                         activeColor: Colors.pink,
                         textAlign: TextAlign.center,

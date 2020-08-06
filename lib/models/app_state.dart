@@ -11,8 +11,9 @@ class AppState {
   final List<dynamic> cards;
   final String cardToken;
   final List<Order> orders;
+  final List<Product> favorites;
 
-  AppState({ @required this.user, @required this.products, @required this.cartProducts, @required this.cards, @required this.cardToken, @required this.orders});
+  AppState({ @required this.user, @required this.products, @required this.cartProducts, @required this.cards, @required this.cardToken, @required this.orders, @required this.favorites});
 
   factory AppState.initial() {
     return AppState(
@@ -21,7 +22,8 @@ class AppState {
       cartProducts: [],
       cards: [],
       cardToken: '',
-      orders: []
+      orders: [],
+      favorites: []
     );
   }
 }

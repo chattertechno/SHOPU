@@ -11,7 +11,8 @@ AppState appReducer(AppState state, dynamic action) {
     cartProducts: cartProducts(state.cartProducts, action),
     cards: cardsReducer(state.cards, action),
     cardToken: cardTokenReducer(state.cardToken, action),
-    orders: ordersReducer(state.orders, action)
+    orders: ordersReducer(state.orders, action),
+    favorites: favoritesReducer(state.favorites, action)
   );
 }
 
@@ -41,6 +42,9 @@ List<Product> cartProducts(List<Product> cartProducts, dynamic action) {
     return action.cartProducts;
   }
   return cartProducts;
+}
+List<Product> favoritesReducer(List<Product> favorites, dynamic action) {
+  return favorites;
 }
 
 List<dynamic> cardsReducer(List<dynamic> cards, dynamic action) {

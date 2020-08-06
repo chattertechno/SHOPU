@@ -88,6 +88,7 @@ ThunkAction<AppState> toggleCartProductAction(Product cartProduct) {
   };
 }
 
+
 ThunkAction<AppState> getCartProductsAction = (Store<AppState> store) async {
   final prefs = await SharedPreferences.getInstance();
   final String storedUser = prefs.getString('user');
@@ -174,7 +175,7 @@ class UpdateCardTokenAction {
 
   String get cardToken => this._cardToken;
 
-  UpdateCardTokenAction(this._cardToken);
+  UpdateCardTokenAction(this._cardToken); 
 }
 
 class AddOrderAction {
