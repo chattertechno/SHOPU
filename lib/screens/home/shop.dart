@@ -3,6 +3,7 @@ import 'package:backg/models/product.dart';
 import 'package:backg/redux/actions.dart';
 import 'package:backg/screens/constant.dart';
 import 'package:backg/screens/home/components/body.dart';
+import 'package:backg/screens/home/settings_page.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -28,9 +29,9 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentindex = 0;
   final List<Widget> _children = [
     Body(),
-    Text('Hello World'),
+    Center(child: Text('COMING SOON', style: TextStyle(fontSize: 40.0),)),
     Text('Hey dude'),
-    Text('dude')
+    SettingsPage()
   ];
 
   @override
